@@ -1,0 +1,24 @@
+description = "Hacker Rank Problems"
+
+apply plugin: "groovy"
+apply plugin: "java"
+
+configurations {
+  // always check for new snapshot or release versions.
+  // this will apply to internal modules, which use version numbers like "latest.release"
+  all*.resolutionStrategy {
+    cacheDynamicVersionsFor 0, 'seconds'
+    cacheChangingModulesFor 0, 'seconds'
+  }
+
+  all*.exclude group: 'javax.servlet', module: 'servlet-api'//
+  // , version: '2.4'
+}
+
+dependencies {
+  compile "org.codehaus.groovy:groovy:2.4.12"
+
+  testCompile("org.spockframework:spock-core:1.0-groovy-2.4") {
+    exclude group: "org.codehaus.groovy"
+  }
+}
