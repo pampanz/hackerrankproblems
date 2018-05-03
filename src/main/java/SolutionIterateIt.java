@@ -3,44 +3,43 @@
 // 1/05/18
 
 
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SolutionIterateIt {
   static final double UPPER_BOUND_ARRAY_VALUE = Math.pow(10, 4) * 5;
   private static final double MAX_ELEMENTS_IN_ARRAY = Math.pow(10, 5);
-  private static final BigInteger NEGATIVE = new BigInteger("-1");
 
   static int iterateIt(int[] a) {
     validate(a);
     int rep = 0;
-    List<BigInteger> input = Arrays.stream(a).mapToObj(String::valueOf).map(BigInteger::new).collect(Collectors.toList());
 
-    while (!input.isEmpty()) {
-      List<BigInteger> absoluteDifferences = new ArrayList<>();
-      for (int i = 0; i < input.size(); i++) {
-        BigInteger value1 = input.get(i);
-        List<BigInteger> restOfList = new ArrayList<>(input);
-        restOfList.remove(i);
-        for (int j = i; j < restOfList.size(); j++) {
-          BigInteger value2 = restOfList.get(j);
-          if (value1.compareTo(value2) != 0) {
-            absoluteDifferences.add(absOfMinus(value1, value2));
+    while (a.length > 0) {
+      List<Integer> absoluteDifferences =  new ArrayList<>();
+      for (int i = 0; i < a.length; i++) {
+        int value1 = a[i];
+        for (int j = 0; j < a.length; j++) {
+          if (j != i) {
+            int value2 = a[j];
+            if (value1 != value2) {
+              absoluteDifferences.add(absOfMinus(value1, value2));
+            }
           }
         }
       }
-      input = absoluteDifferences;
+      if(absoluteDifferences.isEmpty()) {
+        a = new int[0];
+      } else {
+        a = absoluteDifferences.stream().mapToInt(i -> i).toArray();
+      }
       rep++;
     }
 
     return rep;
   }
 
-  private static BigInteger absOfMinus(BigInteger value1, BigInteger value2) {
-    return value1.add(value2.multiply(NEGATIVE)).abs();
+  private static int absOfMinus(int value1, int value2) {
+    return Math.abs(value1 - value2);
   }
 
   private static void validate(int[] a) {
