@@ -1,4 +1,3 @@
-// Copyright 2018 Red Energy Limited
 // Pablo Sosa (psosa_ar@yahoo.com)
 // 3/05/18
 
